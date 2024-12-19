@@ -1,0 +1,75 @@
+ml () {  module ml "$@"
+}
+module () {  _module_raw "$@" 2>&1
+}
+_module_raw () {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+#!/bin/bash
+# testing.sh
+# testing file for chill.c
+#
+# executes commands to test that chill.c is working properly
+#
+#
+# JemelyR, January 2023, cs50 23W
+
+
+./chill # no arguments, prints auto table
+  Temp   Wind  Chill
+ -----  -----  ----- 
+ -10.0    5.0  -22.3 
+ -10.0   10.0  -28.3 
+ -10.0   15.0  -32.2 
+
+   0.0    5.0  -10.5 
+   0.0   10.0  -15.9 
+   0.0   15.0  -19.4 
+
+  10.0    5.0    1.2 
+  10.0   10.0   -3.5 
+  10.0   15.0   -6.6 
+
+  20.0    5.0   13.0 
+  20.0   10.0    8.9 
+  20.0   15.0    6.2 
+
+  30.0    5.0   24.7 
+  30.0   10.0   21.2 
+  30.0   15.0   19.0 
+
+  40.0    5.0   36.5 
+  40.0   10.0   33.6 
+  40.0   15.0   31.8 
+
+
+./chill 44 #one argument, prints table of just those temps
+  Temp   Wind  Chill
+ -----  -----  ----- 
+  44.0    5.0   41.2
+  44.0   10.0   38.6
+  44.0   15.0   37.0
+
+./chill 86 #out of temp range, error
+Wind velocity must be between 50.0 and -99.0 degrees Fahrenheit ./chill
+
+./chill 30 0.2 #temp okay but speed out of range, error
+Wind velocity must be greater than 0.4 and less than 232.0 mph ./chill
+
+./chill 16.7 9 #decimal temp and two arguments
+  Temp   Wind  Chill
+ -----  -----  ----- 
+  16.7    9.0    5.5 
+
+./chill -100 0.3 #both temp and speed out of range, error
+Temperature must be less than 50.0 and greater than -99.0 degrees Fahrenheit ./chill
+Wind velocity must be greater than 0.4 and less than 232.0 mph ./chill
+
+./chill 7 8 9 10 #too many argument, error
+usage: too many arguments ./chill
+
+
+
+
+

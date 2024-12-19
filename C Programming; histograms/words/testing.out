@@ -1,0 +1,74 @@
+ml () {  module ml "$@"
+}
+module () {  _module_raw "$@" 2>&1
+}
+_module_raw () {  eval `/usr/bin/tclsh8.6 /usr/lib/x86_64-linux-gnu/modulecmd.tcl bash "$@"`;
+ _mlstatus=$?;
+ return $_mlstatus
+}
+#!/bin/bash
+#
+# tester file for words.c
+#
+# executes commands to make sure words.c works properly
+# 
+# JemelyR, January 2023, cs50
+
+
+
+./words < words.c | head #should print head of itself
+words
+c
+program
+breaks
+input
+from
+stdin
+or
+files
+into
+
+./words emptyTest #read an empty file, should print out can't read error message
+File is unreadable
+
+./words < testing #read a test file, should only print words, one word per line
+hello
+this
+is
+testing
+file
+for
+words
+test
+Jemely
+R
+done
+
+
+./words < test2 #a test file, should only print words, one words per line
+hello
+this
+is
+the
+second
+test
+written
+by
+Jemely
+
+
+#read what i type until eof, should only print words, one word per line
+./words <<EOF 
+this is third test#$% hello67 8 9 done
+EOF
+this
+is
+third
+test
+hello
+done
+
+
+
+
+
